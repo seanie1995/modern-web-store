@@ -27,7 +27,7 @@ export default function Home() {
     <div>
       <main className="">
         <HeroSection />
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 w-3/4 mx-auto py-8">
+        <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 w-3/4 mx-auto py-8">
           {products.map((item) => (
             <ProductCard data={item} key={item.id} />
           ))}

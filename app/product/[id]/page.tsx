@@ -1,25 +1,14 @@
 import { Product } from "@/app/Entities/Products";
+import { FetchSingleProduct } from "@/app/utils/FetchData";
+import Image from "next/image";
 
-interface PageProps {
+type PageProps = {
   params: Promise<{ id: string }>;
-}
-
-async function fetchProduct(id: string): Promise<Product | null> {
-  if (!id) return null;
-
-  try {
-    const res = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`);
-    if (!res.ok) return null;
-    return res.json();
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-}
+};
 
 export default async function ProductPage({ params }: PageProps) {
   const { id } = await params;
-  const product = await fetchProduct(id);
+  const product = await FetchSingleProduct(id);
 
   if (!product) {
     return (
@@ -31,40 +20,42 @@ export default async function ProductPage({ params }: PageProps) {
   }
 
   return (
-    <main className="p-4">
-      <h1 className="text-2xl font-bold">{product.title}</h1>
-      <p>
-        <strong>Price:</strong> ${product.price}
-      </p>
-      <p>
-        <strong>Description:</strong> {product.description}
-      </p>
-      <p>
-        <strong>Category:</strong> {product.category.name} (ID:{" "}
-        {product.category.id})
-      </p>
-
-      <div>
-        <strong>Category Image:</strong>
-        <img
-          src={product.category.image}
-          alt={product.category.name}
-          width={100}
-        />
+    <main className="w-2/3 mx-auto flex p-8">
+      <div className=" p-12 flex flex-col align-center  gap-8 ">
+        <h2 className="text-2xl font-bold">{product.title}</h2>
+        <span>
+          <strong>Price:</strong> {product.price}:-
+        </span>
+        <span>
+          <strong>Description:</strong> <br></br>
+          {product.description}
+        </span>
       </div>
 
-      <div className="mt-4">
-        <strong>Images:</strong>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {product.images.map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt={`${product.title} ${i + 1}`}
-              width={200}
-              className="border border-gray-300 rounded"
-            />
-          ))}
+      <div>
+        {" "}
+        <figure>
+          <Image
+            src={product.images[0]}
+            alt={product.category.name}
+            width={1440}
+            height={100}
+          />
+        </figure>
+        <div className="mt-4">
+          <strong>Images:</strong>
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            {product.images.map((img, i) => (
+              <Image
+                key={i}
+                src={img}
+                alt={`${product.title} ${i + 1}`}
+                width={200}
+                height={100}
+                className="border border-gray-300 rounded"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>

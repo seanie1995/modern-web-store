@@ -9,6 +9,9 @@ const HeroSection = () => {
         width={1920}
         height={1080}
       />
+      <h1 className="absolute inset-0 flex items-center justify-center text-white text-9xl font-bold pointer-events-none">
+        CONSUME
+      </h1>
     </div>
   );
 };

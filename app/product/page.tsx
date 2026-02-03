@@ -16,13 +16,27 @@ const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchItem, setSearchItem] = useState("");
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = e.target.value;
+    setSearchItem(searchTerm);
+
+    const filteredDisplay = products.filter(
+      (i) =>
+        ((selectedCategory === "None" ||
+          i.category.name === selectedCategory) &&
+          i.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        i.category.name.toLowerCase().includes(searchItem.toLowerCase()),
+    );
+
+    setDisplay(filteredDisplay);
+  };
+
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
       const offset = (page - 1) * PAGE_SIZE;
       const data = await FetchProducts(PAGE_SIZE, offset);
       setProducts((prev) => [...prev, ...data]);
-
       setLoading(false);
     };
 
@@ -81,8 +95,10 @@ const AllProducts = () => {
         </select>
         <input
           type="text"
-          placeholder="Filter..."
           className="border py-1 px-1 rounded-xl"
+          value={searchItem}
+          onChange={handleInputChange}
+          placeholder="Type to search..."
         />
       </div>
       {loading && <p>Loading…</p>}

@@ -6,9 +6,18 @@ type PageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function ProductPage({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const product = await FetchSingleProduct(id);
+
+  return {
+    title: `${product?.title}`,
+  };
+}
+
+export default async function ProductPage({ params }: PageProps) {
+  const { id } = await params;
+  const product = await FetchSingleProduct(id, undefined);
 
   if (!product) {
     return (

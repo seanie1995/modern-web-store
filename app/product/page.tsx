@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FetchCategories, FetchProducts } from "../utils/FetchData";
 import { Product, Category } from "../Entities/Products";
 import ProductCard from "../Components/ProductCard";
@@ -12,24 +12,8 @@ const AllProducts = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [display, setDisplay] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchItem, setSearchItem] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value;
-    setSearchItem(searchTerm);
-
-    const filteredDisplay = products.filter(
-      (i) =>
-        ((selectedCategory === "None" ||
-          i.category.name === selectedCategory) &&
-          i.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        i.category.name.toLowerCase().includes(searchItem.toLowerCase()),
-    );
-
-    setDisplay(filteredDisplay);
-  };
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -40,12 +24,6 @@ const AllProducts = () => {
       setLoading(false);
     };
 
-    const loadDisplay = () => {
-      const productCopy = products;
-      setDisplay(productCopy);
-    };
-
-    loadDisplay();
     loadProducts();
   }, [page]);
 
@@ -59,17 +37,13 @@ const AllProducts = () => {
     loadCategories();
   }, []);
 
-  useEffect(() => {
-    if (selectedCategory === "None") {
-      setDisplay(products);
-    } else {
-      const updatedDisplay = products.filter(
-        (i) => i.category.name === selectedCategory,
-      );
-
-      setDisplay(updatedDisplay);
-    }
-  }, [selectedCategory]);
+  const display = useMemo(() => {
+    return products.filter(
+      (i) =>
+        (selectedCategory === "None" || i.category.name === selectedCategory) &&
+        i.title.toLowerCase().includes(searchItem.toLowerCase()),
+    );
+  }, [searchItem, products, selectedCategory]);
 
   const goToPage = (newPage: number) => {
     setPage(newPage);
@@ -97,7 +71,7 @@ const AllProducts = () => {
           type="text"
           className="border py-1 px-1 rounded-xl"
           value={searchItem}
-          onChange={handleInputChange}
+          onChange={(e) => setSearchItem(e.target.value)}
           placeholder="Type to search..."
         />
       </div>

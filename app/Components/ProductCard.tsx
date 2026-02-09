@@ -8,7 +8,7 @@ type ProductProps = {
 };
 
 const ProductCard: React.FC<ProductProps> = ({ data }) => {
-  const { title, price, description, category, images, id } = data;
+  const { title, price, description, category, images, slug, id } = data;
 
   return (
     <div className=" border-gray-600 bg-sky-100 p-4 rounded-2xl">

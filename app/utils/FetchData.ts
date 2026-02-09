@@ -17,11 +17,18 @@ export const FetchProducts = async (
   return await res.json();
 };
 
-export async function FetchSingleProduct(id: string): Promise<Product | null> {
-  if (!id) return null;
+export async function FetchSingleProduct(
+  id?: string,
+  slug?: string,
+): Promise<Product | null> {
+  if (!id && !slug) return null;
 
   try {
-    const res = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`);
+    const url = id
+      ? `https://api.escuelajs.co/api/v1/products/${id}`
+      : `https://api.escuelajs.co/api/v1/products/slug/${slug}`;
+
+    const res = await fetch(url);
     if (!res.ok) return null;
     return res.json();
   } catch (err) {

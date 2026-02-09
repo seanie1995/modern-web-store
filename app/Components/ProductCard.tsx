@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductProps> = ({ data }) => {
       <h4>Category: {category.name}</h4>
       <h5 className="font-bold">{price}:-</h5>
       <Link
-        href={`/product/${id}`}
+        href={`/product/${slug}`}
         className="font-bold hover:cursor-pointer hover:text-blue-500 transition-all duration-200"
       >
         More Info

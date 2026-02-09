@@ -18,15 +18,12 @@ export const FetchProducts = async (
 };
 
 export async function FetchSingleProduct(
-  id?: string,
-  slug?: string,
+  slug: string,
 ): Promise<Product | null> {
-  if (!id && !slug) return null;
+  if (!slug) return null;
 
   try {
-    const url = id
-      ? `https://api.escuelajs.co/api/v1/products/${id}`
-      : `https://api.escuelajs.co/api/v1/products/slug/${slug}`;
+    const url = `https://api.escuelajs.co/api/v1/products/slug/${slug}`;
 
     const res = await fetch(url);
     if (!res.ok) return null;

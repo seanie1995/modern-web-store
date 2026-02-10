@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductProps> = ({ data }) => {
           alt="Product image"
           width={400}
           height={200}
-          objectFit="cover"
+          loading="eager"
         />
       </figure>
       <h3 className="text-xl font-bold ">{title}</h3>

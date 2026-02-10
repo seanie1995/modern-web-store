@@ -6,3 +6,11 @@ export interface Product {
   category: string;
   image: string;
 }
+
+export interface ProductResponse {
+  items: Product[];
+  total: number;
+  page: number;
+  size: number;
+  pages: number;
+}

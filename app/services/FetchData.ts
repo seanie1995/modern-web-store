@@ -1,19 +1,29 @@
 // utils/FetchData.ts
-import { Product } from "../Entities/Products";
+import { Product, ProductResponse } from "../Entities/Products";
+
+const URL_API = `https://fakestoreapi.com`;
 
 export const FetchProducts = async (
   limit: number,
-  offset: number = 0,
-): Promise<Product[]> => {
-  const url = `https://fakestoreapi.com/products/?limit=${limit}`;
-  const res = await fetch(url);
+  sort: string = "asc",
+  page: number = 1,
+): Promise<ProductResponse> => {
+  const params = new URLSearchParams({
+    limit: limit.toString(),
+    orderByDirection: sort,
+    page: page.toString(),
+  });
+
+  const res = await fetch(`${URL_API}/products/?${params}`);
 
   if (!res.ok) {
     console.log(res);
     throw new Error("Failed to fetch products");
   }
 
-  return await res.json();
+  const data = await res.json();
+
+  return data;
 };
 
 export async function FetchSingleProduct(id: number): Promise<Product | null> {

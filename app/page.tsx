@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Product } from "./Entities/Products";
-import { FetchProducts } from "./utils/FetchData";
+import { FetchProducts } from "./services/FetchData";
 import ProductCard from "./Components/ProductCard";
 import HeroSection from "./Components/HeroSection/HeroSection";
 import SubSection from "./Components/MainSubSection/page";

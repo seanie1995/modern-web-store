@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { FetchCategories, FetchProducts } from "../utils/FetchData";
-import { Product, Category } from "../Entities/Products";
+import { FetchProducts } from "../services/FetchData";
+import { Product } from "../Entities/Products";
 import ProductCard from "../Components/ProductCard";
 
 const PAGE_SIZE = 12;
 
 const AllProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("");
+
   const [searchItem, setSearchItem] = useState("");
 
   useEffect(() => {
@@ -27,23 +26,11 @@ const AllProducts = () => {
     loadProducts();
   }, [page]);
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      const dataCat = await FetchCategories();
-      setCategories(dataCat);
-      setSelectedCategory("None");
-    };
-
-    loadCategories();
-  }, []);
-
   const display = useMemo(() => {
-    return products.filter(
-      (i) =>
-        (selectedCategory === "None" || i.category.name === selectedCategory) &&
-        i.title.toLowerCase().includes(searchItem.toLowerCase()),
+    return products.filter((i) =>
+      i.title.toLowerCase().includes(searchItem.toLowerCase()),
     );
-  }, [searchItem, products, selectedCategory]);
+  }, [searchItem, products]);
 
   const goToPage = (newPage: number) => {
     setPage(newPage);
@@ -55,18 +42,7 @@ const AllProducts = () => {
   return (
     <main className="w-2/3 mx-auto ">
       <h1 className="text-2xl font-bold mb-6">All Products</h1>
-      <div className="mx-auto ">
-        <select
-          className="border py-2 px-1 rounded-xl m-2"
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="None">None</option>
-          {categories.map((i, index) => (
-            <option key={index} value={i.name}>
-              {i.name}
-            </option>
-          ))}
-        </select>
+      <div className="mx-auto mb-6 ">
         <input
           type="text"
           className="border py-1 px-1 rounded-xl"

@@ -1,9 +1,9 @@
 import { Product } from "@/app/Entities/Products";
-import { FetchSingleProduct } from "@/app/utils/FetchData";
+import { FetchSingleProduct } from "@/app/services/FetchData";
 import Image from "next/image";
 
 type PageProps = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: number }>;
 };
 
 export async function generateMetadata({ params }: PageProps) {
@@ -45,27 +45,12 @@ export default async function ProductPage({ params }: PageProps) {
         {" "}
         <figure>
           <Image
-            src={product.images[0]}
-            alt={product.category.name}
+            src={product.image}
+            alt={product.title}
             width={1440}
             height={100}
           />
         </figure>
-        <div className="mt-4">
-          <strong>Images:</strong>
-          <div className="grid grid-cols-2 gap-2 mt-2">
-            {product.images.map((img, i) => (
-              <Image
-                key={i}
-                src={img}
-                alt={`${product.title} ${i + 1}`}
-                width={200}
-                height={100}
-                className="border border-gray-300 rounded"
-              />
-            ))}
-          </div>
-        </div>
       </div>
     </main>
   );

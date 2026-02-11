@@ -1,5 +1,5 @@
 // utils/FetchData.ts
-import { Product, ProductResponse } from "../Entities/Products";
+import { Product } from "../Entities/Products";
 
 const URL_API = `https://fakestoreapi.com`;
 
@@ -7,7 +7,7 @@ export const FetchProducts = async (
   limit: number,
   sort: string = "asc",
   page: number = 1,
-): Promise<ProductResponse> => {
+): Promise<Product[]> => {
   const params = new URLSearchParams({
     limit: limit.toString(),
     orderByDirection: sort,

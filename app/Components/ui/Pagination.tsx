@@ -18,7 +18,7 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
   };
 
   return (
-    <div className="flex justify-center gap-4">
+    <div className="flex justify-center gap-4 m-6">
       {currentPage > 1 && (
         <>
           <Link href={createPageURL(1)}>First</Link>

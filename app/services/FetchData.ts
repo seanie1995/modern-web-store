@@ -10,14 +10,15 @@ export const FetchProducts = async (
 ): Promise<Product[]> => {
   const params = new URLSearchParams({
     limit: limit.toString(),
-    orderByDirection: sort,
+    sort: sort,
     page: page.toString(),
   });
+
+  console.log(`${params}`);
 
   const res = await fetch(`${URL_API}/products/?${params}`);
 
   if (!res.ok) {
-    console.log(res);
     throw new Error("Failed to fetch products");
   }
 

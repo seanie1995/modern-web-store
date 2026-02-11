@@ -4,11 +4,14 @@ import ProductCard from "../ProductCard";
 import { FetchProducts } from "@/app/services/FetchData";
 import LimitSelect from "./LimitSelect";
 import Pagination from "./Pagination";
+import SortSelect from "./SortSelect";
 
 const ProductGrid = async ({
   searchParams,
+  mainPage,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  mainPage?: boolean;
 }) => {
   const { limit = "6", sort = "asc", page = "1" } = await searchParams;
 
@@ -18,13 +21,23 @@ const ProductGrid = async ({
 
   const products = await FetchProducts(currentLimit, sortDirectionString);
 
+  console.log(searchParams.toString());
+
   const total = products.length;
 
   return (
     <section>
-      <div className="container mx-auto flex gap-4 pt-8 px-4 w-2/3 ">
-        Displaying <LimitSelect /> out of {total} items
-      </div>
+      {mainPage ? (
+        <div className="container mx-auto flex gap-4 pt-8 px-4 w-2/3 ">
+          Displaying <LimitSelect /> out of {total} items
+        </div>
+      ) : null}
+
+      {mainPage ? (
+        <div className="container mx-auto flex gap-4 pt-8 px-4 w-2/3 ">
+          <SortSelect />
+        </div>
+      ) : null}
 
       <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 w-2/3  mx-auto py-8 ">
         {products && Array.isArray(products) ? (
@@ -35,7 +48,7 @@ const ProductGrid = async ({
           <p>No products found.</p>
         )}
       </div>
-      <Pagination totalPages={2} />
+      {mainPage ? <Pagination totalPages={2} /> : null}
     </section>
   );
 };

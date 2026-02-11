@@ -21,7 +21,7 @@ const AllProducts = async ({ searchParams }: PageProps) => {
 
       <div>
         {" "}
-        <ProductGrid searchParams={searchParams} />
+        <ProductGrid searchParams={searchParams} mainPage={true} />
       </div>
     </main>
   );

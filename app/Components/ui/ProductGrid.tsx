@@ -1,10 +1,10 @@
-import React from "react";
 import ProductCard from "../ProductCard";
 
 import { FetchProducts } from "@/app/services/FetchData";
 import LimitSelect from "./LimitSelect";
 import Pagination from "./Pagination";
 import SortSelect from "./SortSelect";
+import CategorySelect from "./CategorySelect";
 
 const ProductGrid = async ({
   searchParams,
@@ -21,21 +21,27 @@ const ProductGrid = async ({
 
   const products = await FetchProducts(currentLimit, sortDirectionString);
 
-  console.log(searchParams.toString());
+  const categoriesSet = new Set(products.map((i) => i.category));
+
+  const categories = [...categoriesSet];
 
   const total = products.length;
+
+  const filterStyling = "container mx-auto flex gap-4 pt-8 px-4 w-2/3 ";
 
   return (
     <section>
       {mainPage ? (
-        <div className="container mx-auto flex gap-4 pt-8 px-4 w-2/3 ">
-          Displaying <LimitSelect /> out of {total} items
-        </div>
-      ) : null}
-
-      {mainPage ? (
-        <div className="container mx-auto flex gap-4 pt-8 px-4 w-2/3 ">
-          <SortSelect />
+        <div>
+          <div className={filterStyling}>
+            Displaying <LimitSelect /> out of {total} items
+          </div>{" "}
+          <div className={filterStyling}>
+            <SortSelect />
+          </div>
+          <div className={filterStyling}>
+            <CategorySelect categories={categories} />
+          </div>
         </div>
       ) : null}
 
@@ -48,7 +54,7 @@ const ProductGrid = async ({
           <p>No products found.</p>
         )}
       </div>
-      {mainPage ? <Pagination totalPages={2} /> : null}
+      {/*   {mainPage ? <Pagination totalPages={2} /> : null} */}
     </section>
   );
 };

@@ -23,7 +23,7 @@ const ProductCard: React.FC<ProductProps> = ({ data }) => {
       </figure>
       <div>
         {" "}
-        <h3 className="text-xl font-bold ">{title}</h3>
+        <h3 className="text-lg font-bold ">{title}</h3>
         <h5 className="font-bold">{price}:-</h5>
         <Link
           href={`/product/${id}`}

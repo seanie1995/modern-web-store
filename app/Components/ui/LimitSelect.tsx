@@ -8,7 +8,7 @@ const LimitSelect = () => {
   const pathName = usePathname();
   const router = useRouter();
 
-  const limit = searchParams.get("limit") || "12";
+  const limit = searchParams.get("limit") || "6";
 
   const ITEM_LIMITS = ["6", "8", "12"];
 

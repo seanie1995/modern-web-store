@@ -14,7 +14,7 @@ export const FetchProducts = async (
     page: page.toString(),
   });
 
-  console.log(`${params}`);
+  const url = `${URL_API}/products/?${params}`;
 
   const res = await fetch(`${URL_API}/products/?${params}`);
 

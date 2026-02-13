@@ -22,6 +22,8 @@ export const FetchProducts = async (
     throw new Error("Failed to fetch products");
   }
 
+  console.log("YOU MADE A FETCH" + ` ${url}`);
+
   const data = await res.json();
 
   return data;

@@ -48,7 +48,7 @@ const ProductGrid = async ({
       <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 w-2/3  mx-auto py-8 ">
         {products && Array.isArray(products) ? (
           products.map((i, index) => (
-            <ProductCard data={i} key={i.id || index} />
+            <ProductCard product={i} key={i.id || index} />
           ))
         ) : (
           <p>No products found.</p>

@@ -1,4 +1,3 @@
-import { Product } from "@/app/Entities/Products";
 import { FetchSingleProduct } from "@/app/services/FetchData";
 import Image from "next/image";
 

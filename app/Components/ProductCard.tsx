@@ -2,13 +2,23 @@ import React, { ReactNode } from "react";
 import { Product } from "../Entities/Products";
 import Image from "next/image";
 import Link from "next/link";
+import LikeButton from "./LikeButton";
 
 type ProductProps = {
-  data: Product;
+  product: Product;
 };
 
-const ProductCard: React.FC<ProductProps> = ({ data }) => {
-  const { title, price, description, category, id, image } = data;
+const ProductCard: React.FC<ProductProps> = async ({ product }) => {
+  const { title, price, description, category, id, image } = product;
+
+  const res = await fetch(
+    `http://localhost:3000/api/like?productName=${title}`,
+    { cache: "no-store" },
+  );
+
+  const data = await res.json();
+
+  const intialLikes = data.likes || 0;
 
   return (
     <div className=" border-gray-600 bg-sky-100 p-4 rounded-2xl flex flex-col justify-between  ">
@@ -32,6 +42,7 @@ const ProductCard: React.FC<ProductProps> = ({ data }) => {
           More Info
         </Link>
       </div>
+      <LikeButton productName={title} initialLikes={intialLikes} />
     </div>
   );
 };

@@ -18,6 +18,8 @@ export default async function ProductPage({ params }: PageProps) {
   const { id } = await params;
   const product = await FetchSingleProduct(id);
 
+  console.log(product);
+
   if (!product) {
     return (
       <main className="p-4">
@@ -44,7 +46,7 @@ export default async function ProductPage({ params }: PageProps) {
         {" "}
         <figure>
           <Image
-            src={product.image}
+            src={product?.image}
             alt={product.title}
             width={1440}
             height={100}

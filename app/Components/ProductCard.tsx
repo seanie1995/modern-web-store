@@ -9,7 +9,7 @@ type ProductProps = {
 };
 
 const ProductCard: React.FC<ProductProps> = async ({ product }) => {
-  const { title, price, description, category, id, image } = product;
+  const { title, price, description, category, id, thumbnail } = product;
 
   const res = await fetch(
     `http://localhost:3000/api/like?productName=${title}`,
@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductProps> = async ({ product }) => {
     <div className=" border-gray-600 bg-sky-100 p-4 rounded-2xl flex flex-col justify-between  ">
       <figure className="flex justify-center">
         <Image
-          src={image}
+          src={thumbnail}
           alt="Product image"
           width={175}
           height={100}

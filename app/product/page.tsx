@@ -1,6 +1,3 @@
-import { FetchProducts } from "../services/FetchData";
-import { Product } from "../Entities/Products";
-import ProductCard from "../Components/ProductCard";
 import ProductGrid from "../Components/ui/ProductGrid";
 
 const PAGE_SIZE = 12;

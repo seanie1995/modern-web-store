@@ -4,13 +4,15 @@ import { Product, RawProduct } from "../Entities/Products";
 const URL_API = "https://dummyjson.com";
 export const FetchProducts = async (
   limit: number,
-  sort: string = "asc",
+  order: string = "asc",
   page: number = 1,
+  sortBy: string,
 ): Promise<Product[]> => {
   const params = new URLSearchParams({
     limit: limit.toString(),
-    sort: sort,
+    order: order,
     page: page.toString(),
+    sortBy: sortBy,
   });
 
   const res = await fetch(`${URL_API}/products/?${params}`);
@@ -33,8 +35,6 @@ export const FetchProducts = async (
     thumbnail: item.thumbnail,
     image: item.images[0],
   }));
-
-  console.log(data[0]);
 
   return data;
 };

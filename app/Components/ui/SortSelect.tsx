@@ -11,7 +11,8 @@ const SortSelect = () => {
 
   const createSortURL = (direction: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("sort", direction);
+    params.set("sortBy", "id");
+    params.set("order", direction);
 
     return `?${params.toString()}`;
   };

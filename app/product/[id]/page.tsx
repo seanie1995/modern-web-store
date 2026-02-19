@@ -18,8 +18,6 @@ export default async function ProductPage({ params }: PageProps) {
   const { id } = await params;
   const product = await FetchSingleProduct(id);
 
-  console.log(product);
-
   if (!product) {
     return (
       <main className="p-4">

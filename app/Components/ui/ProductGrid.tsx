@@ -13,13 +13,24 @@ const ProductGrid = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
   mainPage?: boolean;
 }) => {
-  const { limit = "6", sort = "asc", page = "1" } = await searchParams;
+  const {
+    limit = "6",
+    order = "asc",
+    page = "1",
+    sortBy = "id",
+  } = await searchParams;
 
   const currentLimit = Number(Array.isArray(limit) ? limit[0] : limit);
-  const sortDirectionString = Array.isArray(sort) ? sort[0] : sort;
+  const sortDirectionString = Array.isArray(order) ? order[0] : order;
   const currentPage = Number(Array.isArray(page ? page[0] : page));
+  const sortQuery = Array.isArray(sortBy) ? sortBy[0] : sortBy;
 
-  const products = await FetchProducts(currentLimit, sortDirectionString);
+  const products = await FetchProducts(
+    currentLimit,
+    sortDirectionString,
+    currentPage,
+    sortQuery,
+  );
 
   const categoriesSet = new Set(products.map((i) => i.category));
 

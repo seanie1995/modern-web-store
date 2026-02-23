@@ -1,33 +1,36 @@
 "use client";
 
-import React from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import path from "path";
+
 import Link from "next/link";
 
 const Pagination = ({ totalPages }: { totalPages: number }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentPage = Number(searchParams.get("page")) || 1;
+  const currentSkip = Number(searchParams.get("skip")) || 0;
+
+  const limit = Number(searchParams.get("limit")) || 6;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("page", pageNumber.toString());
+
+    params.set("skip", pageNumber.toString());
+    console.log(params);
     return `${pathname}?${params.toString()}`;
   };
 
   return (
     <div className="flex justify-center gap-4 m-6">
-      {currentPage > 1 && (
+      {currentSkip > 1 && (
         <>
           <Link href={createPageURL(1)}>First</Link>
-          <Link href={createPageURL(currentPage - 1)}>&larr; Previous</Link>
+          <Link href={createPageURL(currentSkip - limit)}>&larr; Less</Link>
         </>
       )}
-      {currentPage < totalPages && (
+      {currentSkip < totalPages && (
         <>
-          <Link href={createPageURL(currentPage + 1)}>Next &rarr;</Link>
+          <Link href={createPageURL(currentSkip + limit)}>More &rarr;</Link>
           <Link href={createPageURL(totalPages)}>Last</Link>
         </>
       )}

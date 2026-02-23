@@ -16,27 +16,29 @@ const ProductGrid = async ({
   const {
     limit = "6",
     order = "asc",
-    page = "1",
+    skip = "0",
     sortBy = "id",
   } = await searchParams;
 
   const currentLimit = Number(Array.isArray(limit) ? limit[0] : limit);
   const sortDirectionString = Array.isArray(order) ? order[0] : order;
-  const currentPage = Number(Array.isArray(page ? page[0] : page));
+  const currentSkip = Number(Array.isArray(skip ? skip[0] : skip));
   const sortQuery = Array.isArray(sortBy) ? sortBy[0] : sortBy;
 
-  const products = await FetchProducts(
+  const res = await FetchProducts(
     currentLimit,
     sortDirectionString,
-    currentPage,
+    currentSkip,
     sortQuery,
   );
+
+  const products = res.products;
 
   const categoriesSet = new Set(products.map((i) => i.category));
 
   const categories = [...categoriesSet];
 
-  const total = products.length;
+  const total = res.total;
 
   const filterStyling = "container mx-auto flex gap-4 pt-8 px-4 w-2/3 ";
 
@@ -65,7 +67,9 @@ const ProductGrid = async ({
           <p>No products found.</p>
         )}
       </div>
-      {/*   {mainPage ? <Pagination totalPages={2} /> : null} */}
+      {mainPage ? (
+        <Pagination totalPages={Math.ceil(total / currentLimit)} />
+      ) : null}
     </section>
   );
 };

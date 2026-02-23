@@ -1,17 +1,17 @@
 // utils/FetchData.ts
-import { Product, RawProduct } from "../Entities/Products";
+import { Product, ProductResponse, RawProduct } from "../Entities/Products";
 
 const URL_API = "https://dummyjson.com";
 export const FetchProducts = async (
   limit: number,
   order: string = "asc",
-  page: number = 1,
+  skip: number = 0,
   sortBy: string,
-): Promise<Product[]> => {
+): Promise<ProductResponse> => {
   const params = new URLSearchParams({
     limit: limit.toString(),
     order: order,
-    page: page.toString(),
+    skip: skip.toString(),
     sortBy: sortBy,
   });
 
@@ -24,19 +24,7 @@ export const FetchProducts = async (
 
   const response = await res.json();
 
-  const rawData = response.products as RawProduct[];
-
-  const data: Product[] = rawData.map((item) => ({
-    id: item.id,
-    title: item.title,
-    price: item.price,
-    description: item.description,
-    category: item.category,
-    thumbnail: item.thumbnail,
-    image: item.images[0],
-  }));
-
-  return data;
+  return response;
 };
 
 export async function FetchSingleProduct(id: number): Promise<Product | null> {

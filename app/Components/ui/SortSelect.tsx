@@ -7,7 +7,7 @@ import Link from "next/link";
 const SortSelect = () => {
   const searchParams = useSearchParams();
 
-  const currentSort = searchParams.get("sortDirection") || "asc";
+  const currentSort = searchParams.get("order") || "asc";
 
   const createSortURL = (direction: string) => {
     const params = new URLSearchParams(searchParams.toString());

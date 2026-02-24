@@ -52,9 +52,9 @@ const ProductGrid = async ({
           <div className={filterStyling}>
             <SortSelect />
           </div>
-          <div className={filterStyling}>
+          {/* <div className={filterStyling}>
             <CategorySelect categories={categories} />
-          </div>
+          </div> */}
         </div>
       ) : null}
 
@@ -68,7 +68,7 @@ const ProductGrid = async ({
         )}
       </div>
       {mainPage ? (
-        <Pagination totalPages={Math.ceil(total / currentLimit)} />
+        <Pagination totalSkip={Math.ceil(total / currentLimit)} />
       ) : null}
     </section>
   );

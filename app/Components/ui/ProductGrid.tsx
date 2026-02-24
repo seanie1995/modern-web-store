@@ -22,7 +22,7 @@ const ProductGrid = async ({
 
   const currentLimit = Number(Array.isArray(limit) ? limit[0] : limit);
   const sortDirectionString = Array.isArray(order) ? order[0] : order;
-  const currentSkip = Number(Array.isArray(skip ? skip[0] : skip));
+  const currentSkip = Number(Array.isArray(skip) ? skip[0] : skip);
   const sortQuery = Array.isArray(sortBy) ? sortBy[0] : sortBy;
 
   const res = await FetchProducts(
